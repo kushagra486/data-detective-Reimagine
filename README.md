@@ -27,7 +27,8 @@ python3 -m http.server 8000
 
 ## Deploy on GitHub Pages
 
-Repo → Settings → Pages → Source: *Deploy from a branch* → `main` / root. The site will be at `https://<user>.github.io/<repo>/`.
+Repo → Settings → Pages → Source: *Deploy from a branch* → Branch `main`, folder `/ (root)` → Save.
+The site is published at https://kushagra486.github.io/data-detective-Reimagine/ and updates automatically (in about a minute) on every push to `main`.
 
 ## Options (`config.js`)
 
