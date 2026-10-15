@@ -6,11 +6,11 @@
 
 window.CERT_CONFIG = {
   // Event details shown on the website
-  eventName: "Your Event Name",
-  organizer: "Your Organization",
+  eventName: "Data Detective",
+  organizer: "REIMAGINE",
 
   // The blank certificate image (PNG or JPG). Higher resolution = sharper download.
-  templateImage: "assets/certificate-template.png",
+  templateImage: "assets/certificate-template.jpg",
 
   // List of participants, used only when restrictToList is true
   // (one name per line, or a CSV with a "name" column).
@@ -29,12 +29,12 @@ window.CERT_CONFIG = {
   // y is the text baseline (the line the letters sit on).
   name: {
     x: 0.5,
-    y: 0.562,
-    maxWidth: 0.6,          // name shrinks to fit within this fraction of the width
-    fontSize: 0.065,        // fraction of image height
-    fontFamily: "Great Vibes", // any Google Font loaded in index.html
-    fontWeight: "400",
-    color: "#1f3a5f",
+    y: 0.643,
+    maxWidth: 0.54,         // name shrinks to fit within this fraction of the width
+    fontSize: 0.047,        // fraction of image height
+    fontFamily: "Cinzel",   // any Google Font loaded in index.html
+    fontWeight: "700",
+    color: "#13295b",
     align: "center",        // "left" | "center" | "right"
     uppercase: false,
   },

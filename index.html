@@ -3,43 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Certificates</title>
+  <title>Data Detective · Certificates</title>
+  <meta name="description" content="Download your Data Detective – Peer-to-Peer Learning Activity participation certificate. REIMAGINE, Department of IT & Data Science, BBDITM Lucknow." />
+  <meta name="theme-color" content="#0b1d45" />
+  <link rel="icon" href="assets/badge.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Add the font used on your certificate here -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Oswald:wght@600;700&family=Poppins:wght@400;500;600&family=Kalam:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="hero">
-    <p class="eyebrow" data-organizer></p>
-    <h1>Get your certificate</h1>
-    <p class="sub">for <strong data-event-name></strong></p>
+  <div class="topbar">
+    <img src="assets/reimagine-logo.png" alt="REIMAGINE" class="logo logo-reimagine" />
+    <div class="dept">Department of Information Technology &amp; Data Science<br /><span>BBDITM, Lucknow</span></div>
+    <img src="assets/bbditm-logo.png" alt="BBDITM" class="logo logo-bbditm" />
+  </div>
 
-    <form id="search-form" class="search" autocomplete="off" novalidate>
-      <label for="name-input" class="sr-only">Your full name</label>
-      <div class="search-box">
-        <input id="name-input" type="text" placeholder="Enter your full name" maxlength="80"
-               aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false" />
-        <button type="submit">Search</button>
-        <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
-      </div>
-      <p id="message" class="message" role="status" aria-live="polite"></p>
-    </form>
+  <header class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <svg class="deco deco-chart" viewBox="0 0 120 90"><rect x="8" y="50" width="16" height="32" rx="2"/><rect x="34" y="34" width="16" height="48" rx="2"/><rect x="60" y="18" width="16" height="64" rx="2"/><rect x="86" y="6" width="16" height="76" rx="2"/></svg>
+      <svg class="deco deco-pie" viewBox="0 0 100 100"><path d="M50 50 L50 6 A44 44 0 1 1 13 74 Z"/><path d="M46 46 L46 2 A44 44 0 0 0 9 70 Z" opacity=".55"/></svg>
+      <svg class="deco deco-code" viewBox="0 0 100 60"><path d="M30 10 L8 30 L30 50 M70 10 L92 30 L70 50 M58 4 L42 56" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <p class="eyebrow">REIMAGINE presents</p>
+    <h1 class="title" aria-label="Data Detective">
+      <svg class="lens" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="26" cy="26" r="20" fill="none" stroke-width="7"/>
+        <rect x="16" y="28" width="5" height="9" rx="1"/><rect x="24" y="22" width="5" height="15" rx="1"/><rect x="32" y="16" width="5" height="21" rx="1"/>
+        <path d="M41 41 L58 58" stroke-width="9" stroke-linecap="round"/>
+      </svg>
+      <span class="t-data">DATA</span> <span class="t-detective">DETECTIVE</span>
+    </h1>
+    <p class="ribbon"><span>Peer-to-Peer Learning Activity</span></p>
+    <p class="steps">Explore <i>•</i> Analyse <i>•</i> Solve <i>•</i> Share</p>
+
+    <div class="card">
+      <h2 class="card-title">Claim your <strong>Participation Certificate</strong></h2>
+      <p class="card-sub">Type your full name exactly as you want it printed.</p>
+      <form id="search-form" class="search" autocomplete="off" novalidate>
+        <label for="name-input" class="sr-only">Your full name</label>
+        <div class="search-box">
+          <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M15.5 15.5 L21 21"/></svg>
+          <input id="name-input" type="text" placeholder="e.g. Priya Sharma" maxlength="80" autocapitalize="words"
+                 aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false" />
+          <button type="submit">Get certificate</button>
+          <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+        </div>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </header>
 
   <main>
     <section id="result" class="result" hidden>
-      <h2>Congratulations, <span id="result-name"></span>!</h2>
+      <img src="assets/badge.png" alt="" class="result-badge" aria-hidden="true" />
+      <p class="case">Case closed!</p>
+      <h2>Congratulations, <span id="result-name"></span></h2>
+      <p class="thanks">Thank you for being a part of this learning journey!</p>
       <div class="preview-wrap"><canvas id="preview" aria-label="Certificate preview"></canvas></div>
       <div class="actions">
-        <button id="download-pdf" class="btn primary" type="button">Download PDF</button>
-        <button id="download-png" class="btn" type="button">Download Image (PNG)</button>
+        <button id="download-pdf" class="btn primary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Download PDF
+        </button>
+        <button id="download-png" class="btn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Download Image
+        </button>
       </div>
+      <p class="hint">Spotted a typo? Just fix your name above and get it again.</p>
     </section>
   </main>
 
-  <footer>© <span data-organizer></span></footer>
+  <footer>
+    <strong>REIMAGINE</strong> · Department of Information Technology &amp; Data Science, BBDITM, Lucknow
+  </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="config.js"></script>
