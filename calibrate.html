@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Name Position Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: Inter, system-ui, sans-serif; margin: 0; padding: 16px; background: #f6f3ec; color: #1d2433; }
+    h1 { font-size: 1.3rem; margin: 0 0 4px; }
+    p { margin: 0 0 16px; color: #5d6576; }
+    .layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+    @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+    canvas { width: 100%; height: auto; border: 1px solid #ccc; cursor: crosshair; background: #fff; display: block; }
+    .panel { background: #fff; border-radius: 12px; padding: 16px; display: grid; gap: 12px; align-content: start; }
+    label { display: grid; gap: 4px; font-size: .85rem; font-weight: 600; }
+    input, select { font: inherit; padding: 6px 8px; }
+    textarea { width: 100%; height: 220px; font-family: ui-monospace, monospace; font-size: .8rem; }
+    button { font: inherit; font-weight: 600; padding: 10px; border-radius: 8px; border: 0; background: #1f3a5f; color: #fff; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Name position tool (for organizers)</h1>
+  <p>Click on the certificate where the name's baseline (the line letters sit on) should be. Adjust the settings, then copy the result into <code>config.js</code>.</p>
+  <div class="layout">
+    <canvas id="c"></canvas>
+    <div class="panel">
+      <label>Sample name <input id="sample" value="Alexandra Johnson-Smith" /></label>
+      <label>Font family (Google Font name) <input id="font" /></label>
+      <label>Font size <input id="size" type="range" min="0.02" max="0.15" step="0.001" /></label>
+      <label>Max width <input id="maxw" type="range" min="0.1" max="1" step="0.01" /></label>
+      <label>Color <input id="color" type="color" /></label>
+      <label>Align
+        <select id="align"><option>center</option><option>left</option><option>right</option></select>
+      </label>
+      <label><span><input id="upper" type="checkbox" /> UPPERCASE</span></label>
+      <label>Paste into config.js (replace the <code>name:</code> block)
+        <textarea id="out" readonly></textarea>
+      </label>
+      <button id="copy" type="button">Copy</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="js/certificate.js"></script>
+  <script>
+    const cfg = window.CERT_CONFIG;
+    const n = cfg.name;
+    const c = document.getElementById("c");
+    const el = (id) => document.getElementById(id);
+    el("font").value = n.fontFamily; el("size").value = n.fontSize; el("maxw").value = n.maxWidth;
+    el("color").value = n.color; el("align").value = n.align; el("upper").checked = !!n.uppercase;
+
+    function loadFont(family) {
+      const id = "gf-" + family.replace(/\W/g, "");
+      if (document.getElementById(id)) return;
+      const l = document.createElement("link");
+      l.id = id; l.rel = "stylesheet";
+      l.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(family).replace(/%20/g, "+") + "&display=swap";
+      document.head.appendChild(l);
+    }
+
+    async function draw() {
+      n.fontFamily = el("font").value.trim() || "serif";
+      n.fontSize = +el("size").value; n.maxWidth = +el("maxw").value;
+      n.color = el("color").value; n.align = el("align").value; n.uppercase = el("upper").checked;
+      loadFont(n.fontFamily);
+      await Certificate.render(c, el("sample").value, cfg);
+      const ctx = c.getContext("2d");
+      ctx.strokeStyle = "rgba(220,0,0,.6)"; ctx.setLineDash([12, 8]); ctx.lineWidth = 2;
+      const left = n.align === "center" ? (n.x - n.maxWidth / 2) : n.align === "right" ? n.x - n.maxWidth : n.x;
+      ctx.strokeRect(left * c.width, n.y * c.height - n.fontSize * c.height, n.maxWidth * c.width, n.fontSize * c.height * 1.25);
+      el("out").value = "name: " + JSON.stringify({
+        x: +n.x.toFixed(4), y: +n.y.toFixed(4), maxWidth: n.maxWidth, fontSize: n.fontSize,
+        fontFamily: n.fontFamily, fontWeight: n.fontWeight || "400", color: n.color, align: n.align, uppercase: n.uppercase,
+      }, null, 2) + ",";
+    }
+
+    c.addEventListener("click", (e) => {
+      const r = c.getBoundingClientRect();
+      n.x = (e.clientX - r.left) / r.width; n.y = (e.clientY - r.top) / r.height; draw();
+    });
+    ["sample", "font", "size", "maxw", "color", "align", "upper"].forEach((id) => el(id).addEventListener("input", draw));
+    el("copy").addEventListener("click", () => navigator.clipboard.writeText(el("out").value));
+    document.fonts.ready.then(draw);
+  </script>
+</body>
+</html>
