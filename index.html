@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Certificates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Add the font used on your certificate here -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow" data-organizer></p>
+    <h1>Get your certificate</h1>
+    <p class="sub">for <strong data-event-name></strong></p>
+
+    <form id="search-form" class="search" autocomplete="off" novalidate>
+      <label for="name-input" class="sr-only">Your full name</label>
+      <div class="search-box">
+        <input id="name-input" type="text" placeholder="Enter your full name" maxlength="80"
+               aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false" />
+        <button type="submit">Search</button>
+        <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+      </div>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </form>
+  </header>
+
+  <main>
+    <section id="result" class="result" hidden>
+      <h2>Congratulations, <span id="result-name"></span>!</h2>
+      <div class="preview-wrap"><canvas id="preview" aria-label="Certificate preview"></canvas></div>
+      <div class="actions">
+        <button id="download-pdf" class="btn primary" type="button">Download PDF</button>
+        <button id="download-png" class="btn" type="button">Download Image (PNG)</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span data-organizer></span></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="config.js"></script>
+  <script src="js/certificate.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
