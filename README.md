@@ -10,7 +10,7 @@ A static website where participants search their name and download a personalise
 
 ## Setup (organizers)
 
-1. **Template:** replace `assets/certificate-template.png` with your blank certificate (no name on it). Export it at high resolution, e.g. 3508×2480 for A4 landscape. If the file name differs, update `templateImage` in `config.js`.
+1. **Template:** replace `assets/certificate-template.jpg` with your blank certificate (no name on it). Export it at high resolution, e.g. 3508×2480 for A4 landscape. If the file name differs, update `templateImage` in `config.js`.
 2. **Participants (optional):** by default anyone can type a name. To accept only listed names, set `restrictToList: true` in `config.js` and put the names in `participants.csv`, one per line under a `name` header. You can export this from Excel or Google Sheets as CSV.
 3. **Name position:** open `calibrate.html`, click where the name should sit, and adjust the font, size and colour. Then copy the generated `name:` block into `config.js`.
 4. **Font:** if you use a different Google Font, add it to the Google Fonts `<link>` in `index.html`.
