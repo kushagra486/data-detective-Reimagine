@@ -50,6 +50,12 @@
     return out;
   }
 
+  function tidyName(name) {
+    if (!cfg.autoCapitalize) return name;
+    if (name !== name.toLowerCase() && name !== name.toUpperCase()) return name;
+    return name.toLowerCase().replace(/(^|[\s\-'’.])(\p{L})/gu, (m, sep, ch) => sep + ch.toUpperCase());
+  }
+
   function setMessage(text, kind) {
     message.textContent = text || "";
     message.className = "message" + (kind ? " " + kind : "");
@@ -104,7 +110,7 @@
     const typed = input.value.replace(/\s+/g, " ").trim();
     if (!typed) { setMessage("Please enter your name.", "error"); return; }
 
-    if (!cfg.restrictToList) { generate(typed); return; }
+    if (!cfg.restrictToList) { generate(tidyName(typed)); return; }
 
     const exact = participants.find((p) => normalize(p) === normalize(typed));
     if (exact) { generate(exact); return; }
@@ -127,6 +133,7 @@
   document.querySelectorAll("[data-event-name]").forEach((el) => (el.textContent = cfg.eventName));
   document.querySelectorAll("[data-organizer]").forEach((el) => (el.textContent = cfg.organizer));
   document.title = "Certificates · " + cfg.eventName;
+  if (!cfg.restrictToList) form.querySelector("button[type=submit]").textContent = "Get certificate";
 
   // Warm up the template + font so the first preview is fast.
   window.Certificate.loadImage(cfg.templateImage).catch(() => {});

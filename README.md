@@ -4,14 +4,14 @@ A static website where participants search their name and download a personalise
 
 ## How it works
 
-1. A participant types their name. Matching names from `participants.csv` are suggested as they type.
-2. If the name is on the list, their name is drawn onto your certificate template and a preview is shown.
+1. A participant types their name.
+2. Their name is drawn onto your certificate template and a preview is shown. Names typed in all-lowercase or ALL-CAPS are capitalised properly.
 3. They click **Download PDF** or **Download Image (PNG)**.
 
 ## Setup (organizers)
 
 1. **Template:** replace `assets/certificate-template.png` with your blank certificate (no name on it). Export it at high resolution, e.g. 3508×2480 for A4 landscape. If the file name differs, update `templateImage` in `config.js`.
-2. **Participants:** put the names in `participants.csv`, one per line under a `name` header. You can export this from Excel or Google Sheets as CSV.
+2. **Participants (optional):** by default anyone can type a name. To accept only listed names, set `restrictToList: true` in `config.js` and put the names in `participants.csv`, one per line under a `name` header. You can export this from Excel or Google Sheets as CSV.
 3. **Name position:** open `calibrate.html`, click where the name should sit, and adjust the font, size and colour. Then copy the generated `name:` block into `config.js`.
 4. **Font:** if you use a different Google Font, add it to the Google Fonts `<link>` in `index.html`.
 5. **Theme:** change the colours at the top of `css/style.css` and the `eventName` / `organizer` in `config.js`.
@@ -33,8 +33,9 @@ Repo → Settings → Pages → Source: *Deploy from a branch* → `main` / root
 
 | Option | Meaning |
 | --- | --- |
-| `restrictToList` | `true`: only names in the CSV get a certificate. `false`: anyone can type any name. |
+| `restrictToList` | `false` (default): anyone can type any name. `true`: only names in the CSV get a certificate, with suggestions as they type. |
+| `autoCapitalize` | Turns `priya patel` / `PRIYA PATEL` into `Priya Patel`. |
 | `formats` | `["pdf", "png"]`, or just one of them. |
 | `name.uppercase` | Print the name in capitals. |
 
-> Note: on a static site the participant list is publicly downloadable. If that's a concern, set `restrictToList: false` or use a small backend.
+> Note: when `restrictToList` is on, the participant list is publicly downloadable from a static site.
