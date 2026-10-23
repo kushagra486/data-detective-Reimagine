@@ -11,11 +11,17 @@ window.CERT_CONFIG = {
 
   templateImage: "assets/certificate-template.png",
 
-  // Used only when restrictToList is true.
-  participantsFile: "participants.csv",
+  // Participant lists, checked only when restrictToList is true. Each CSV can be
+  // a plain list of names, an MLH export (First Name / Last Name columns) or a
+  // team sheet (Team Leader / Member 1 / Member 2 ... columns). Names only: these
+  // files are public on a static site, so never include emails or phone numbers.
+  participantsFile: ["participants-mlh.csv", "participants-teams.csv"],
 
-  // false = anyone can type their name and get a certificate (no list needed).
+  // true = only names on the lists above get a certificate; others see notFoundMessage.
+  // Switched on once the participant lists are added.
   restrictToList: false,
+  suggestAsYouType: false, // don't reveal list names while someone is typing
+  notFoundMessage: "Sorry, we couldn't find that name in the Hacktoberfest 2026 participant list. Please type your full name exactly as you registered, or contact the REIMAGINE Club team.",
 
   // "priya patel" / "PRIYA PATEL" -> "Priya Patel"; mixed case kept as typed.
   autoCapitalize: true,
