@@ -20,8 +20,8 @@ jobs:
       - name: Ping verify-certificate
         run: |
           code=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "apikey: sb_publishable_KPo7PQvRavvuFTakkliT8w_yGtz8MAV" \
-            "https://ahwtmyaqzkiekyywgyqw.supabase.co/functions/v1/verify-certificate?id=HF26-PING-PING")
+            -H "apikey: sb_publishable_6MsO-kW2_cMpHEJK0jMueA_2QuqmVbj" \
+            "https://pkqirnoclubwnvgivqwy.supabase.co/functions/v1/verify-certificate?id=HF26-PING-PING")
           echo "verify-certificate answered HTTP $code"
           # 404 = function ran and found no such certificate (expected); anything else is a problem
           test "$code" = "404"

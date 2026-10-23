@@ -9,7 +9,7 @@
 // hacktoberfest/supabase/.
 //
 // After publishing any change to the Hacktoberfest site, bump the version (e.g.
-// 20261023-2 -> 20261023-3) in version.json AND in the ?v= tags and the V value in
+// 20261023-3 -> 20261023-3) in version.json AND in the ?v= tags and the V value in
 // index.html and verify.html, so visitors' browsers load the newest files at once.
 
 window.CERT_CONFIG = {
@@ -18,8 +18,8 @@ window.CERT_CONFIG = {
 
   // Supabase project. The publishable key is meant to be public; never put a
   // secret / service_role key in this file.
-  supabaseUrl: "https://ahwtmyaqzkiekyywgyqw.supabase.co",
-  supabaseKey: "sb_publishable_KPo7PQvRavvuFTakkliT8w_yGtz8MAV",
+  supabaseUrl: "https://pkqirnoclubwnvgivqwy.supabase.co",
+  supabaseKey: "sb_publishable_6MsO-kW2_cMpHEJK0jMueA_2QuqmVbj",
 
   // Shown when a typed name is not on the participant list.
   notFoundMessage: "Sorry, we couldn't find that name in the Hacktoberfest 2026 participant list. Please type your full name exactly as you registered, or contact the REIMAGINE Club team.",
