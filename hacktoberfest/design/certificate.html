@@ -56,34 +56,39 @@
     box-shadow: 0 8px 22px rgba(29,19,64,.13); border: 2px solid #efe8ff; display: flex; align-items: center; }
   .corner img { display: block; width: auto; height: 62px; }
   .corner.left { left: 96px; }
-  .corner.right { right: 96px; }
+  .corner.right { right: 96px; gap: 18px; }
+  .corner.right .sep { width: 2px; height: 56px; background: #e6def8; }
+  .corner.right img.bb { height: 70px; }
 
-  .org { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .org img { height: 58px; width: auto; }
-  .org b { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 30px; letter-spacing: .26em; color: var(--violet); }
-  .org span { font-size: 18px; color: var(--muted); letter-spacing: .03em; }
+  .inst { display: flex; align-items: center; gap: 22px; margin-top: 2px; }
+  .inst img { height: 112px; width: auto; mix-blend-mode: multiply; }
+  .inst-name { text-align: left; font-family: "Rajdhani", sans-serif; font-weight: 700; color: var(--ink); line-height: 1.02; text-transform: uppercase; }
+  .inst-name .l1 { display: block; font-size: 50px; letter-spacing: .05em; color: #c8102e; }
+  .inst-name .l2 { display: block; font-size: 25px; letter-spacing: .085em; color: #1d2f6f; margin-top: 4px; }
+  .org { margin-top: 14px; font-size: 19px; color: var(--muted); letter-spacing: .02em; }
+  .org b { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 23px; letter-spacing: .2em; color: var(--violet); margin-right: 6px; }
 
-  .title { margin-top: 30px; font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 104px; line-height: 1; letter-spacing: .03em;
+  .title { margin-top: 38px; font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 92px; line-height: 1; letter-spacing: .03em;
     background: linear-gradient(90deg, var(--orange), var(--pink) 40%, var(--violet) 75%, var(--teal));
     -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .year { display: inline-flex; gap: 10px; align-items: center; margin-top: 18px; font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 700; color: var(--ink);
+  .year { display: inline-flex; gap: 10px; align-items: center; margin-top: 14px; font-family: "JetBrains Mono", monospace; font-size: 24px; font-weight: 700; color: var(--ink);
     background: var(--lime); padding: 6px 20px; border-radius: 8px; box-shadow: 0 6px 0 #8fbf10; letter-spacing: .08em; }
   .year span { color: var(--violet); }
 
-  .kind { margin-top: 40px; font-family: "Rajdhani", sans-serif; font-size: 40px; font-weight: 700; letter-spacing: .38em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; }
+  .kind { margin-top: 42px; font-family: "Rajdhani", sans-serif; font-size: 38px; font-weight: 700; letter-spacing: .38em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; }
   .kind::before, .kind::after { content: ""; width: 110px; height: 4px; margin: 0 28px; border-radius: 2px; }
   .kind::before { background: linear-gradient(90deg, transparent, var(--pink)); }
   .kind::after { background: linear-gradient(90deg, var(--teal), transparent); }
 
   .certify { margin-top: 26px; font-size: 26px; color: var(--muted); }
-  .name-line { margin-top: 108px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
+  .name-line { margin-top: 100px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
   .body { margin-top: 30px; max-width: 1180px; font-size: 24px; line-height: 1.6; color: #3b345f; }
   .body b { color: var(--ink); font-weight: 700; }
   .body code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 21px; font-weight: 500; }
 
   .signs { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; padding: 0 40px; }
   .sign { display: flex; flex-direction: column; align-items: center; }
-  .sign .space { height: 96px; }
+  .sign .space { height: 90px; }
   .sign .line { width: 300px; height: 2px; background: rgba(29,19,64,.75); position: relative; }
   .sign .line::before, .sign .line::after { content: ""; position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--violet); }
   .sign .line::before { left: -5px; } .sign .line::after { right: -5px; background: var(--orange); }
@@ -91,8 +96,8 @@
   .sign .sub { margin-top: 2px; font-size: 18px; color: var(--muted); }
 
   .code { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 17px; line-height: 1.6; }
-  .code.l { left: 132px; top: 610px; text-align: left; color: rgba(124,58,237,.42); }
-  .code.r { right: 132px; top: 610px; text-align: right; color: rgba(255,61,139,.45); }
+  .code.l { left: 132px; top: 580px; text-align: left; color: rgba(124,58,237,.42); }
+  .code.r { right: 132px; top: 580px; text-align: right; color: rgba(255,61,139,.45); }
 </style>
 </head>
 <body>
@@ -139,17 +144,17 @@
   </svg>
 
   <div class="corner left"><img src="../assets/reimagine-logo.png" alt="REIMAGINE" /></div>
-  <div class="corner right"><img src="../assets/mlh-logo.svg" alt="MLH" /></div>
+  <div class="corner right"><img src="../assets/mlh-logo.svg" alt="MLH" /><span class="sep"></span><img src="../assets/bbditm-logo.png" alt="BBDITM" class="bb" /></div>
 
   <div class="code l">$ git checkout -b first-pr<br />$ git commit -m "contribute"<br />$ git push origin first-pr</div>
   <div class="code r">&lt;open-source&gt;<br />&nbsp;&nbsp;fork → code → PR<br />&lt;/open-source&gt;</div>
 
   <div class="content">
-    <div class="org">
+    <div class="inst">
       <img src="../assets/bbditm-logo.png" alt="BBDITM" />
-      <b>REIMAGINE CLUB</b>
-      <span>Department of Information Technology · BBDITM, Lucknow</span>
+      <div class="inst-name"><span class="l1">Babu Banarasi Das</span><span class="l2">Institute of Technology &amp; Management</span></div>
     </div>
+    <p class="org"><b>REIMAGINE CLUB</b> · Department of Information Technology · Lucknow</p>
 
     <h1 class="title">HACKTOBERFEST</h1>
     <div class="year"><span>&lt;</span>2026<span>/&gt;</span></div>
