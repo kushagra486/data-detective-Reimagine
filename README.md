@@ -40,3 +40,14 @@ The site is published at https://kushagra486.github.io/data-detective-Reimagine/
 | `name.uppercase` | Print the name in capitals. |
 
 > Note: when `restrictToList` is on, the participant list is publicly downloadable from a static site.
+
+## Hacktoberfest 2026 site (`hacktoberfest/`)
+
+A second event portal for REIMAGINE Club's Hacktoberfest, served at
+https://kushagra486.github.io/data-detective-Reimagine/hacktoberfest/. It reuses the shared `js/` code
+and has its own `config.js`, `css/` and `assets/`.
+
+The certificate is designed in `hacktoberfest/design/certificate.html` and has signature spaces for the
+Director (BBDITM), the Head of Department (IT) and the REIMAGINE Club Coordinator. After editing the design,
+re-render it with `node hacktoberfest/design/render.mjs` (needs Playwright). The script prints the name-line
+position to copy into `hacktoberfest/config.js`.
