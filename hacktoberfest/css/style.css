@@ -35,7 +35,7 @@ body {
 .chip img { display: block; height: 34px; width: auto; mix-blend-mode: multiply; }
 .dept { display: flex; align-items: center; gap: 10px; text-align: left; font-size: .8rem; color: var(--muted); line-height: 1.35; }
 .dept img.bb { height: 40px; width: auto; }
-.dept b { display: block; font-family: "Rajdhani", sans-serif; color: var(--violet); letter-spacing: .2em; font-size: 1.05rem; }
+.dept b { display: block; font-family: "Abril Fatface", serif; font-weight: 400; color: var(--violet); letter-spacing: .06em; font-size: 1.05rem; }
 
 .hero {
   position: relative; overflow: hidden; isolation: isolate; text-align: center;
@@ -61,8 +61,8 @@ body {
 @keyframes blink { 50% { opacity: 0; } }
 
 .title {
-  margin: 0; font-family: "Orbitron", sans-serif; font-weight: 900; line-height: 1; letter-spacing: .03em;
-  font-size: clamp(1.9rem, 8.6vw, 5.2rem);
+  margin: 0; font-family: "Abril Fatface", serif; font-weight: 400; line-height: 1; letter-spacing: .02em;
+  font-size: clamp(2.3rem, 10vw, 6rem);
   background: linear-gradient(90deg, var(--orange), var(--pink) 45%, var(--violet) 80%, var(--teal));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
@@ -75,7 +75,7 @@ body {
   background: linear-gradient(#fff, #fff) padding-box, var(--rainbow) border-box;
   box-shadow: 0 20px 50px rgba(124,58,237,.15);
 }
-.card-title { margin: 0; font-family: "Rajdhani", sans-serif; font-size: clamp(1.25rem, 3.4vw, 1.55rem); font-weight: 700; letter-spacing: .03em; }
+.card-title { margin: 0; font-family: "Abril Fatface", serif; font-size: clamp(1.3rem, 3.6vw, 1.7rem); font-weight: 400; letter-spacing: .01em; }
 .card-title strong { color: var(--pink); }
 .card-sub { margin: 6px 0 18px; color: var(--muted); font-size: .9rem; }
 
@@ -110,7 +110,7 @@ main { flex: 1; padding: 0 16px; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .merged { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 4px 12px; border-radius: 999px; background: #efe7ff; color: var(--violet); font-family: "JetBrains Mono", monospace; font-size: .8rem; }
 .merged .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 8px var(--violet); }
-.result h2 { margin: 12px 0 4px; font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: clamp(1.5rem, 4vw, 2.2rem); letter-spacing: .02em; }
+.result h2 { margin: 12px 0 4px; font-family: "Abril Fatface", serif; font-weight: 400; font-size: clamp(1.5rem, 4vw, 2.3rem); letter-spacing: .01em; }
 .thanks { margin: 0 0 22px; color: var(--muted); }
 .preview-wrap { border-radius: 10px; overflow: hidden; border: 1px solid #ece6f8; box-shadow: 0 6px 20px rgba(29,19,64,.08); }
 #preview { display: block; width: 100%; height: auto; }
