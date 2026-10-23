@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verify a Certificate · Hacktoberfest 2026</title>
+  <meta name="description" content="Check that a Hacktoberfest 2026 certificate issued by REIMAGINE Club, BBDITM Lucknow is genuine using its Certificate ID." />
+  <meta name="theme-color" content="#7c3aed" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Outfit:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <span class="chip"><img src="assets/reimagine-logo.png" alt="REIMAGINE" /></span>
+    <img class="banner" src="assets/bbditm-banner.png" alt="Babu Banarasi Das Institute of Technology and Management" />
+    <span class="chip"><img src="assets/mlh-logo.svg" alt="MLH" /></span>
+  </div>
+
+  <header class="hero">
+    <p class="prompt"><span>$</span> ./verify-certificate --event hacktoberfest<i class="caret"></i></p>
+    <h1 class="title">HACKTOBERFEST</h1>
+    <p class="year">&lt; 2026 /&gt;</p>
+
+    <div class="card">
+      <h2 class="card-title">Verify a <strong>Certificate</strong></h2>
+      <p class="card-sub">Enter the Certificate ID printed on the certificate, e.g. HF26-R4EG-KMZF.</p>
+      <form id="verify-form" class="search" autocomplete="off" novalidate>
+        <label for="id-input" class="sr-only">Certificate ID</label>
+        <div class="search-box">
+          <span class="search-ico" aria-hidden="true">#</span>
+          <input id="id-input" type="text" placeholder="HF26-XXXX-XXXX" maxlength="20" autocapitalize="characters" spellcheck="false" />
+          <button type="submit">Verify</button>
+        </div>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </header>
+
+  <main>
+    <section id="verified" class="verified" hidden>
+      <p class="ok">✓ Genuine certificate</p>
+      <dl>
+        <dt>Issued to</dt><dd id="v-name" class="name"></dd>
+        <dt>Team</dt><dd id="v-team"></dd>
+        <dt>Event</dt><dd id="v-event"></dd>
+        <dt>Certificate ID</dt><dd id="v-id" class="id"></dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer><b>REIMAGINE Club</b> · Department of Information Technology, BBDITM, Lucknow · <a href="./">Get your certificate</a></footer>
+
+  <script src="js/verify.js"></script>
+</body>
+</html>

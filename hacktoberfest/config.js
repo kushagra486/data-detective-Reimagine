@@ -1,37 +1,15 @@
 // ============================================================
-//  HACKTOBERFEST CERTIFICATES — EDIT THIS FILE TO MATCH YOUR TEMPLATE
+//  HACKTOBERFEST CERTIFICATES — SETTINGS
 // ============================================================
-// Tip: the certificate design lives in design/certificate.html.
-// After changing it, re-render with `node hacktoberfest/design/render.mjs`,
-// which also prints the name-line position for the values below.
+// Certificates are pre-made for every name on the participant list and stored
+// encrypted in certs/ (one file per accepted name); verify/ holds one record per
+// Certificate ID. Only a listed name can open its certificate, so nobody else can
+// get one. The blank template and the list itself are not published.
 
 window.CERT_CONFIG = {
   eventName: "Hacktoberfest 2026",
   organizer: "REIMAGINE Club",
 
-  templateImage: "assets/certificate-template.png",
-
-  // Used only when restrictToList is true.
-  participantsFile: "participants.csv",
-
-  // false = anyone can type their name and get a certificate (no list needed).
-  restrictToList: false,
-
-  // "priya patel" / "PRIYA PATEL" -> "Priya Patel"; mixed case kept as typed.
-  autoCapitalize: true,
-
-  // x / y are fractions of the image width / height; y is the text baseline.
-  name: {
-    x: 0.5,
-    y: 0.640,
-    maxWidth: 0.46,
-    fontSize: 0.05,
-    fontFamily: "Abril Fatface",
-    fontWeight: "400",
-    color: "#1d1340",
-    align: "center",
-    uppercase: false,
-  },
-
-  formats: ["pdf", "png"],
+  // Shown when a typed name is not on the participant list.
+  notFoundMessage: "Sorry, we couldn't find that name in the Hacktoberfest 2026 participant list. Please type your full name exactly as you registered, or contact the REIMAGINE Club team.",
 };
