@@ -11,11 +11,14 @@ window.CERT_CONFIG = {
 
   templateImage: "assets/certificate-template.png",
 
-  // Used only when restrictToList is true.
+  // Final participant list (Name, Team): the team registration form plus late
+  // additions. Names only: this file is public, so never add emails or phone numbers.
   participantsFile: "participants.csv",
 
-  // false = anyone can type their name and get a certificate (no list needed).
-  restrictToList: false,
+  // Only names on the list get a certificate; everyone else sees notFoundMessage.
+  restrictToList: true,
+  suggestAsYouType: false, // don't reveal list names while someone is typing
+  notFoundMessage: "Sorry, we couldn't find that name in the Hacktoberfest 2026 participant list. Please type your full name exactly as you registered, or contact the REIMAGINE Club team.",
 
   // "priya patel" / "PRIYA PATEL" -> "Priya Patel"; mixed case kept as typed.
   autoCapitalize: true,
