@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700;800&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Outfit:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 <style>
   :root {
     --bg: #fffaf2;
@@ -24,96 +24,135 @@
   html, body { width: 1754px; height: 1240px; }
   body {
     position: relative; overflow: hidden;
-    font-family: "Space Grotesk", sans-serif; color: var(--ink);
+    font-family: "Outfit", sans-serif; color: var(--ink);
     background:
-      radial-gradient(520px 420px at 0% 0%, rgba(124,58,237,.22), transparent 70%),
-      radial-gradient(520px 420px at 100% 0%, rgba(0,184,169,.20), transparent 70%),
-      radial-gradient(560px 440px at 0% 100%, rgba(255,61,139,.20), transparent 70%),
-      radial-gradient(560px 440px at 100% 100%, rgba(255,122,26,.24), transparent 70%),
+      radial-gradient(520px 420px at 0% 0%, rgba(124,58,237,.20), transparent 70%),
+      radial-gradient(520px 420px at 100% 0%, rgba(0,184,169,.18), transparent 70%),
+      radial-gradient(560px 440px at 0% 100%, rgba(255,61,139,.18), transparent 70%),
+      radial-gradient(560px 440px at 100% 100%, rgba(255,122,26,.22), transparent 70%),
       var(--bg);
   }
-  /* faint code grid */
+  /* faint dot grid */
   body::before {
     content: ""; position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(29,19,64,.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(29,19,64,.045) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-image: radial-gradient(rgba(29,19,64,.10) 1.4px, transparent 1.6px);
+    background-size: 28px 28px;
   }
-  /* rainbow stripe frame */
+
+  /* outer rainbow frame */
   .frame {
-    position: absolute; inset: 30px; border-radius: 24px;
+    position: absolute; inset: 26px; border-radius: 26px;
     border: 10px solid transparent;
-    background: linear-gradient(var(--bg), var(--bg)) padding-box,
-                linear-gradient(120deg, var(--violet), var(--pink) 30%, var(--orange) 55%, var(--yellow) 72%, var(--teal)) border-box;
-    -webkit-mask: linear-gradient(#000 0 0) border-box, linear-gradient(#000 0 0) padding-box;
+    background: linear-gradient(120deg, var(--violet), var(--pink) 30%, var(--orange) 55%, var(--yellow) 72%, var(--teal)) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0) border-box;
     -webkit-mask-composite: xor; mask-composite: exclude;
   }
-  .frame-inner { position: absolute; inset: 54px; border-radius: 14px; border: 2px dashed rgba(29,19,64,.14); }
+  .circuit { position: absolute; inset: 0; width: 1754px; height: 1240px; }
 
-  .px { position: absolute; width: 96px; height: 96px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; opacity: .85; }
-  .px i { background: var(--orange); border-radius: 3px; }
-  .px i:nth-child(3n) { background: var(--pink); }
-  .px i:nth-child(5n) { background: var(--violet); }
-  .px i:nth-child(7n) { background: var(--teal); }
-  .px i:nth-child(4n+1) { background: transparent; }
-  .px.bl { bottom: 74px; left: 74px; transform: scaleX(-1) rotate(180deg); } .px.br { bottom: 74px; right: 74px; transform: rotate(180deg); }
+  .content { position: absolute; inset: 92px 130px 96px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
-  .content { position: absolute; inset: 90px 120px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  /* corner logos */
+  .corner { position: absolute; top: 88px; background: #fff; border-radius: 16px; padding: 12px 20px;
+    box-shadow: 0 8px 22px rgba(29,19,64,.13); border: 2px solid #efe8ff; display: flex; align-items: center; }
+  .corner img { display: block; width: auto; height: 62px; }
+  .corner.left { left: 96px; }
+  .corner.right { right: 96px; }
 
-  .top { width: 100%; display: flex; align-items: center; justify-content: space-between; }
-  .chip { background: #fff; border-radius: 14px; padding: 10px 18px; display: flex; align-items: center; box-shadow: 0 6px 20px rgba(29,19,64,.12); }
-  .chip img { display: block; height: 58px; width: auto; mix-blend-mode: multiply; }
-  .chip.bb img { height: 74px; }
-  .org { font-size: 20px; line-height: 1.45; color: var(--muted); letter-spacing: .02em; }
-  .org b { display: block; color: var(--violet); font-size: 28px; letter-spacing: .14em; font-weight: 700; }
+  .org { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .org img { height: 58px; width: auto; }
+  .org b { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 30px; letter-spacing: .26em; color: var(--violet); }
+  .org span { font-size: 18px; color: var(--muted); letter-spacing: .03em; }
 
-  .title { margin-top: 56px; font-family: "JetBrains Mono", monospace; font-weight: 800; font-size: 118px; line-height: 1; letter-spacing: -.02em;
-    background: linear-gradient(90deg, var(--orange), var(--pink) 45%, var(--violet) 80%, var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .year { display: inline-block; margin-top: 16px; font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 700; color: var(--ink);
-    background: var(--lime); box-shadow: 0 6px 0 #8fbf10; padding: 6px 18px; border-radius: 8px; letter-spacing: .08em; }
+  .title { margin-top: 30px; font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 104px; line-height: 1; letter-spacing: .03em;
+    background: linear-gradient(90deg, var(--orange), var(--pink) 40%, var(--violet) 75%, var(--teal));
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .year { display: inline-flex; gap: 10px; align-items: center; margin-top: 18px; font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 700; color: var(--ink);
+    background: var(--lime); padding: 6px 20px; border-radius: 8px; box-shadow: 0 6px 0 #8fbf10; letter-spacing: .08em; }
   .year span { color: var(--violet); }
 
-  .kind { margin-top: 52px; font-size: 32px; font-weight: 700; letter-spacing: .42em; text-transform: uppercase; color: var(--ink); }
-  .kind::before, .kind::after { content: ""; display: inline-block; width: 90px; height: 3px; vertical-align: middle; margin: 0 26px; background: linear-gradient(90deg, transparent, var(--pink)); }
+  .kind { margin-top: 40px; font-family: "Rajdhani", sans-serif; font-size: 40px; font-weight: 700; letter-spacing: .38em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; }
+  .kind::before, .kind::after { content: ""; width: 110px; height: 4px; margin: 0 28px; border-radius: 2px; }
+  .kind::before { background: linear-gradient(90deg, transparent, var(--pink)); }
   .kind::after { background: linear-gradient(90deg, var(--teal), transparent); }
 
-  .certify { margin-top: 44px; font-size: 26px; color: var(--muted); }
-  .name-line { margin-top: 112px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
-  .body { margin-top: 36px; max-width: 1180px; font-size: 24px; line-height: 1.6; color: #3b345f; }
-  .body b { color: var(--ink); }
-  .body code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 22px; }
+  .certify { margin-top: 26px; font-size: 26px; color: var(--muted); }
+  .name-line { margin-top: 108px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
+  .body { margin-top: 30px; max-width: 1180px; font-size: 24px; line-height: 1.6; color: #3b345f; }
+  .body b { color: var(--ink); font-weight: 700; }
+  .body code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 21px; font-weight: 500; }
 
-  .signs { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; padding: 0 30px; }
+  .signs { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; padding: 0 40px; }
   .sign { display: flex; flex-direction: column; align-items: center; }
-  .sign .space { height: 100px; }
-  .sign .line { width: 300px; height: 2px; background: var(--ink); opacity: .7; }
-  .sign .role { margin-top: 14px; font-size: 24px; font-weight: 700; letter-spacing: .04em; color: var(--ink); }
-  .sign .sub { margin-top: 4px; font-size: 18px; color: var(--muted); }
+  .sign .space { height: 96px; }
+  .sign .line { width: 300px; height: 2px; background: rgba(29,19,64,.75); position: relative; }
+  .sign .line::before, .sign .line::after { content: ""; position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--violet); }
+  .sign .line::before { left: -5px; } .sign .line::after { right: -5px; background: var(--orange); }
+  .sign .role { margin-top: 16px; font-family: "Rajdhani", sans-serif; font-size: 27px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+  .sign .sub { margin-top: 2px; font-size: 18px; color: var(--muted); }
 
-  .code { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 17px; color: rgba(124,58,237,.38); text-align: left; line-height: 1.6; }
-  .code.l { left: 120px; top: 600px; }
-  .code.r { right: 120px; top: 600px; text-align: right; color: rgba(255,61,139,.42); }
+  .code { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 17px; line-height: 1.6; }
+  .code.l { left: 132px; top: 610px; text-align: left; color: rgba(124,58,237,.42); }
+  .code.r { right: 132px; top: 610px; text-align: right; color: rgba(255,61,139,.45); }
 </style>
 </head>
 <body>
   <div class="frame"></div>
-  <div class="frame-inner"></div>
-  <div class="px bl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="px br"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <!-- Circuit-board border: chamfered inner frame + traces mirrored into each corner -->
+  <svg class="circuit" viewBox="0 0 1754 1240" aria-hidden="true">
+    <defs>
+      <linearGradient id="g-border" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7c3aed"/><stop offset=".5" stop-color="#ff3d8b"/><stop offset="1" stop-color="#00b8a9"/>
+      </linearGradient>
+      <g id="traces" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <!-- left edge -->
+        <path d="M60,250 H84 V330 H102" stroke="#7c3aed"/><circle cx="108" cy="330" r="6" fill="#fff" stroke="#7c3aed"/>
+        <path d="M60,290 H74 V410 H92" stroke="#00b8a9"/><circle cx="98" cy="410" r="6" fill="#00b8a9" stroke="#00b8a9"/>
+        <path d="M60,350 H68 V480" stroke="#ff3d8b"/><circle cx="68" cy="486" r="6" fill="#fff" stroke="#ff3d8b"/>
+        <!-- top edge -->
+        <path d="M430,60 V80 H520 V98" stroke="#ff7a1a"/><circle cx="520" cy="104" r="6" fill="#fff" stroke="#ff7a1a"/>
+        <path d="M470,60 V70 H610" stroke="#7c3aed"/><circle cx="616" cy="70" r="6" fill="#7c3aed" stroke="#7c3aed"/>
+        <path d="M560,60 V88 H580" stroke="#00b8a9"/><circle cx="586" cy="88" r="5" fill="#fff" stroke="#00b8a9"/>
+      </g>
+    </defs>
+
+    <!-- chamfered inner border -->
+    <path d="M96,58 H1658 L1696,96 V1144 L1658,1182 H96 L58,1144 V96 Z" fill="none" stroke="url(#g-border)" stroke-width="3"/>
+    <path d="M118,74 H1636 L1680,118 V1122 L1636,1166 H118 L74,1122 V118 Z" fill="none" stroke="#1d1340" stroke-opacity=".12" stroke-width="2" stroke-dasharray="10 8"/>
+    <!-- bright chamfer accents -->
+    <g stroke-width="7" stroke-linecap="round" fill="none">
+      <path d="M58,140 V96 L96,58 H140" stroke="#7c3aed"/>
+      <path d="M1614,58 H1658 L1696,96 V140" stroke="#00b8a9"/>
+      <path d="M1696,1100 V1144 L1658,1182 H1614" stroke="#ff7a1a"/>
+      <path d="M140,1182 H96 L58,1144 V1100" stroke="#ff3d8b"/>
+    </g>
+    <!-- mid-edge connector pins -->
+    <g fill="#1d1340" fill-opacity=".55">
+      <rect x="847" y="52" width="60" height="12" rx="3"/><rect x="847" y="1176" width="60" height="12" rx="3"/>
+      <rect x="52" y="590" width="12" height="60" rx="3"/><rect x="1690" y="590" width="12" height="60" rx="3"/>
+    </g>
+
+    <use href="#traces"/>
+    <use href="#traces" transform="translate(1754,0) scale(-1,1)"/>
+    <use href="#traces" transform="translate(0,1240) scale(1,-1)"/>
+    <use href="#traces" transform="translate(1754,1240) scale(-1,-1)"/>
+  </svg>
+
+  <div class="corner left"><img src="../assets/reimagine-logo.png" alt="REIMAGINE" /></div>
+  <div class="corner right"><img src="../assets/mlh-logo.svg" alt="MLH" /></div>
 
   <div class="code l">$ git checkout -b first-pr<br />$ git commit -m "contribute"<br />$ git push origin first-pr</div>
   <div class="code r">&lt;open-source&gt;<br />&nbsp;&nbsp;fork → code → PR<br />&lt;/open-source&gt;</div>
 
   <div class="content">
-    <div class="top">
-      <div class="chip"><img src="../assets/reimagine-logo.png" alt="" /></div>
-      <div class="org"><b>REIMAGINE CLUB</b>Department of Information Technology<br />BBDITM, Lucknow</div>
-      <div class="chip bb"><img src="../assets/bbditm-logo.png" alt="" /></div>
+    <div class="org">
+      <img src="../assets/bbditm-logo.png" alt="BBDITM" />
+      <b>REIMAGINE CLUB</b>
+      <span>Department of Information Technology · BBDITM, Lucknow</span>
     </div>
 
     <h1 class="title">HACKTOBERFEST</h1>
-    <div class="year"><span>&lt;</span> 2026 <span>/&gt;</span></div>
+    <div class="year"><span>&lt;</span>2026<span>/&gt;</span></div>
 
     <div class="kind">Certificate of Participation</div>
     <p class="certify">This is to certify that</p>
