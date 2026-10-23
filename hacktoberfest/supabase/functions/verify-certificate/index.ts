@@ -18,18 +18,20 @@ const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SE
   auth: { persistSession: false },
 });
 
-function reply(req: Request, status: number, body: unknown): Response {
+function cors(req: Request): Record<string, string> {
   const origin = req.headers.get("origin") ?? "";
+  return {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "content-type, authorization, apikey, x-client-info",
+    "Vary": "Origin",
+  };
+}
+
+function reply(req: Request, status: number, body: unknown): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: {
-      "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "content-type, authorization, apikey, x-client-info",
-      "Vary": "Origin",
-      "Content-Type": "application/json",
-      "Cache-Control": "no-store",
-    },
+    headers: { ...cors(req), "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 }
 
@@ -40,7 +42,7 @@ function cleanId(raw: string): string {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return reply(req, 204, null);
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors(req) });
   if (req.method !== "GET") return reply(req, 405, { error: "method_not_allowed" });
 
   const id = cleanId(new URL(req.url).searchParams.get("id") ?? "");
