@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Outfit:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=20261023-1" />
+  <link rel="stylesheet" href="css/style.css?v=20261023-4" />
   <script>
     // Always show the newest version: if this page is older than the published one
     // (e.g. a copy saved in the browser), reload it under a fresh URL.
     (function () {
-      var V = "20261023-1";
+      var V = "20261023-4";
       function check() {
       fetch("version.json?t=" + Date.now(), { cache: "no-store" })
         .then(function (r) { return r.json(); })
@@ -48,7 +48,7 @@
 
     <div class="card">
       <h2 class="card-title">Verify a <strong>Certificate</strong></h2>
-      <p class="card-sub">Enter the Certificate ID printed on the certificate, e.g. HF26-R4EG-KMZF.</p>
+      <p class="card-sub">Enter the Certificate ID printed on the certificate, e.g. HF26-ABCD-EFGH.</p>
       <form id="verify-form" class="search" autocomplete="off" novalidate>
         <label for="id-input" class="sr-only">Certificate ID</label>
         <div class="search-box">
@@ -75,6 +75,7 @@
 
   <footer><b>REIMAGINE Club</b> · Department of Information Technology, BBDITM, Lucknow · <a href="./">Get your certificate</a></footer>
 
-  <script src="js/verify.js?v=20261023-1"></script>
+  <script src="config.js?v=20261023-4"></script>
+  <script src="js/verify.js?v=20261023-4"></script>
 </body>
 </html>

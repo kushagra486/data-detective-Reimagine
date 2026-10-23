@@ -1,6 +1,7 @@
-// Hacktoberfest certificates: only names on the participant list have a certificate.
-// Each pre-made certificate is stored encrypted under certs/, keyed by the exact name,
-// so a certificate can only be opened by typing a listed name (see design notes in README).
+// Hacktoberfest certificates: only names on the participant list get a certificate.
+// The website asks the Supabase get-certificate function for the typed name; it checks
+// the private participant list and, only for a listed name, returns a short-lived link
+// to that person's pre-made certificate.
 (function () {
   const cfg = window.CERT_CONFIG;
   const $ = (id) => document.getElementById(id);
@@ -13,42 +14,22 @@
   const resultName = $("result-name");
   const button = form.querySelector("button[type=submit]");
 
-  const ITERATIONS = 120000;
   let currentName = null;
 
-  const normalize = (s) =>
-    s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
-
-  function tidyName(name) {
-    return name.replace(/\s+/g, " ").trim().split(" ").map((w) =>
-      w === w.toLowerCase() || (w === w.toUpperCase() && w.length > 1)
-        ? w.toLowerCase().replace(/(^|[\-'’.])(\p{L})/gu, (m, sep, ch) => sep + ch.toUpperCase())
-        : w
-    ).join(" ");
-  }
-
-  async function sha256Hex(text) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-    return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  }
-
-  async function openSealed(secret, salt, bytes) {
-    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), "PBKDF2", false, ["deriveKey"]);
-    const key = await crypto.subtle.deriveKey(
-      { name: "PBKDF2", hash: "SHA-256", salt: new TextEncoder().encode(salt), iterations: ITERATIONS },
-      base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]
-    );
-    return crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes.slice(0, 12) }, key, bytes.slice(12));
-  }
-
+  // Returns { name, blob } for a listed name, or null if the name is not on the list.
   async function fetchCertificate(name) {
-    const key = normalize(name);
-    const file = "certs/" + (await sha256Hex("hf26-cert|" + key)).slice(0, 40) + ".bin";
-    const res = await fetch(file, { cache: "no-cache" });
+    const res = await fetch(cfg.supabaseUrl + "/functions/v1/get-certificate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: cfg.supabaseKey },
+      body: JSON.stringify({ name }),
+    });
     if (res.status === 404) return null;
+    if (res.status === 429) throw Object.assign(new Error("rate limited"), { rateLimited: true });
     if (!res.ok) throw new Error("HTTP " + res.status);
-    const jpeg = await openSealed(key, "hf26-cert-key", new Uint8Array(await res.arrayBuffer()));
-    return new Blob([jpeg], { type: "image/jpeg" });
+    const info = await res.json();
+    const img = await fetch(info.url);
+    if (!img.ok) throw new Error("certificate HTTP " + img.status);
+    return { name: info.name, blob: await img.blob() };
   }
 
   function setMessage(text, kind) {
@@ -65,17 +46,19 @@
     button.disabled = true;
     setMessage("Checking the participant list…");
     try {
-      const blob = await fetchCertificate(typed);
-      if (!blob) { setMessage(cfg.notFoundMessage, "error"); return; }
-      await window.Certificate.drawImage(canvas, blob);
-      currentName = tidyName(typed);
+      const cert = await fetchCertificate(typed);
+      if (!cert) { setMessage(cfg.notFoundMessage, "error"); return; }
+      await window.Certificate.drawImage(canvas, cert.blob);
+      currentName = cert.name;
       resultName.textContent = currentName;
       result.hidden = false;
       setMessage("");
       result.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
       console.error(err);
-      setMessage("Sorry, something went wrong. Please check your connection and try again.", "error");
+      setMessage(err.rateLimited
+        ? "Too many names that are not on the list were tried from this connection. Please wait 10 minutes, then type your full name exactly as you registered."
+        : "Sorry, something went wrong. Please check your connection and try again.", "error");
     } finally {
       button.disabled = false;
     }
