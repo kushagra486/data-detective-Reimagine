@@ -41,39 +41,38 @@
 
   .circuit { position: absolute; inset: 0; width: 1754px; height: 1240px; }
 
-  .content { position: absolute; inset: 112px 130px 96px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .content { position: absolute; inset: 82px 118px 92px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
   /* corner logos */
-  .corner { position: absolute; top: 88px; background: #fff; border-radius: 16px; padding: 12px 20px;
+  .toprow { width: 100%; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .corner { background: #fff; border-radius: 14px; padding: 10px 18px;
     box-shadow: 0 8px 22px rgba(29,19,64,.13); border: 2px solid #efe8ff; display: flex; align-items: center; }
-  .corner img { display: block; width: auto; height: 62px; }
-  .corner.left { left: 96px; }
-  .corner.right { right: 96px; gap: 18px; }
+  .corner img { display: block; width: auto; height: 50px; }
 
-  .banner { display: block; height: 128px; width: auto; mix-blend-mode: multiply; }
-  .org { margin-top: 14px; font-size: 19px; color: var(--muted); letter-spacing: .02em; }
+  .banner { display: block; width: 1440px; height: auto; mix-blend-mode: multiply; }
+  .org { margin: 0; font-size: 19px; color: var(--muted); letter-spacing: .02em; }
   .org b { font-family: "Abril Fatface", serif; font-weight: 400; font-size: 26px; letter-spacing: .08em; color: var(--violet); margin-right: 6px; }
 
-  .title { margin-top: 30px; display: block; width: 1300px; height: 108px; }
-  .title text { font-family: "Abril Fatface", serif; font-weight: 400; font-size: 112px; letter-spacing: .02em; }
-  .year { display: inline-flex; gap: 10px; align-items: center; margin-top: 14px; font-family: "JetBrains Mono", monospace; font-size: 24px; font-weight: 700; color: var(--ink);
+  .title { margin-top: 10px; display: block; width: 1300px; height: 102px; }
+  .title text { font-family: "Abril Fatface", serif; font-weight: 400; font-size: 104px; letter-spacing: .02em; }
+  .year { display: inline-flex; gap: 10px; align-items: center; margin-top: 8px; font-family: "JetBrains Mono", monospace; font-size: 24px; font-weight: 700; color: var(--ink);
     background: var(--lime); padding: 6px 20px; border-radius: 8px; box-shadow: 0 6px 0 #8fbf10; letter-spacing: .08em; }
   .year span { color: var(--violet); }
 
-  .kind { margin-top: 38px; font-family: "Abril Fatface", serif; font-size: 46px; font-weight: 400; letter-spacing: .06em; color: var(--ink); display: flex; align-items: center; }
+  .kind { margin-top: 26px; font-family: "Abril Fatface", serif; font-size: 42px; font-weight: 400; letter-spacing: .06em; color: var(--ink); display: flex; align-items: center; }
   .kind::before, .kind::after { content: ""; width: 110px; height: 4px; margin: 0 28px; border-radius: 2px; }
   .kind::before { background: linear-gradient(90deg, transparent, var(--pink)); }
   .kind::after { background: linear-gradient(90deg, var(--teal), transparent); }
 
-  .certify { margin-top: 22px; font-family: "Abril Fatface", serif; font-size: 30px; letter-spacing: .02em; color: var(--muted); }
-  .name-line { margin-top: 100px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
-  .body { margin-top: 30px; max-width: 1180px; font-size: 24px; line-height: 1.6; color: #3b345f; }
+  .certify { margin-top: 12px; font-family: "Abril Fatface", serif; font-size: 27px; letter-spacing: .02em; color: var(--muted); }
+  .name-line { margin-top: 86px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
+  .body { margin-top: 22px; max-width: 1200px; font-size: 22px; line-height: 1.55; color: #3b345f; }
   .body b { color: var(--ink); font-weight: 700; }
-  .body code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 21px; font-weight: 500; }
+  .body code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 20px; font-weight: 500; white-space: nowrap; }
 
   .signs { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; padding: 0 40px; }
   .sign { display: flex; flex-direction: column; align-items: center; }
-  .sign .space { height: 90px; }
+  .sign .space { height: 70px; }
   .sign .line { width: 300px; height: 2px; background: rgba(29,19,64,.75); position: relative; }
   .sign .line::before, .sign .line::after { content: ""; position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--violet); }
   .sign .line::before { left: -5px; } .sign .line::after { right: -5px; background: var(--orange); }
@@ -81,8 +80,8 @@
   .sign .sub { margin-top: 2px; font-size: 18px; color: var(--muted); }
 
   .code { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 17px; line-height: 1.6; }
-  .code.l { left: 132px; top: 580px; text-align: left; color: rgba(124,58,237,.42); }
-  .code.r { right: 132px; top: 580px; text-align: right; color: rgba(255,61,139,.45); }
+  .code.l { left: 132px; top: 680px; text-align: left; color: rgba(124,58,237,.42); }
+  .code.r { right: 132px; top: 680px; text-align: right; color: rgba(255,61,139,.45); }
 </style>
 </head>
 <body>
@@ -101,7 +100,8 @@
         <path d="M60,250 H84 V330 H102" stroke="#7c3aed"/><circle cx="108" cy="330" r="6" fill="#fff" stroke="#7c3aed"/>
         <path d="M60,290 H74 V410 H92" stroke="#00b8a9"/><circle cx="98" cy="410" r="6" fill="#00b8a9" stroke="#00b8a9"/>
         <path d="M60,350 H68 V480" stroke="#ff3d8b"/><circle cx="68" cy="486" r="6" fill="#fff" stroke="#ff3d8b"/>
-        <!-- top edge -->
+      </g>
+      <g id="edge" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
         <path d="M410,60 V76 H470 V84" stroke="#ff7a1a"/><circle cx="470" cy="90" r="6" fill="#fff" stroke="#ff7a1a"/>
         <path d="M440,60 V70 H560" stroke="#7c3aed"/><circle cx="566" cy="70" r="6" fill="#7c3aed" stroke="#7c3aed"/>
         <path d="M520,60 V80 H580" stroke="#00b8a9"/><circle cx="586" cy="80" r="5" fill="#fff" stroke="#00b8a9"/>
@@ -127,26 +127,30 @@
     </g>
 
     <use href="#traces"/>
+    <use href="#edge" transform="translate(0,1240) scale(1,-1)"/>
+    <use href="#edge" transform="translate(1754,1240) scale(-1,-1)"/>
     <use href="#traces" transform="translate(1754,0) scale(-1,1)"/>
     <use href="#traces" transform="translate(0,1240) scale(1,-1)"/>
     <use href="#traces" transform="translate(1754,1240) scale(-1,-1)"/>
   </svg>
 
-  <div class="corner left"><img src="../assets/reimagine-logo.png" alt="REIMAGINE" /></div>
-  <div class="corner right"><img src="../assets/mlh-logo.svg" alt="MLH" /></div>
 
   <div class="code l">$ git checkout -b first-pr<br />$ git commit -m "contribute"<br />$ git push origin first-pr</div>
   <div class="code r">&lt;open-source&gt;<br />&nbsp;&nbsp;fork → code → PR<br />&lt;/open-source&gt;</div>
 
   <div class="content">
     <img class="banner" src="../assets/bbditm-banner.png" alt="Babu Banarasi Das Institute of Technology and Management" />
-    <p class="org"><b>REIMAGINE CLUB</b> · Department of Information Technology · Lucknow</p>
+    <div class="toprow">
+      <div class="corner"><img src="../assets/reimagine-logo.png" alt="REIMAGINE" /></div>
+      <p class="org"><b>REIMAGINE CLUB</b> · Department of Information Technology · Lucknow</p>
+      <div class="corner"><img src="../assets/mlh-logo.svg" alt="MLH" /></div>
+    </div>
 
     <svg class="title" viewBox="0 0 1300 108" role="img" aria-label="HACKTOBERFEST">
       <defs><linearGradient id="g-title" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0" stop-color="#ff7a1a"/><stop offset=".4" stop-color="#ff3d8b"/><stop offset=".75" stop-color="#7c3aed"/><stop offset="1" stop-color="#00b8a9"/>
       </linearGradient></defs>
-      <text x="650" y="92" text-anchor="middle"><tspan fill="#ff7425">H</tspan><tspan fill="#ff683b">A</tspan><tspan fill="#ff5d50">C</tspan><tspan fill="#ff5166">K</tspan><tspan fill="#ff457c">T</tspan><tspan fill="#f63d91">O</tspan><tspan fill="#da3ca7">B</tspan><tspan fill="#bd3bbd">E</tspan><tspan fill="#a03bd2">R</tspan><tspan fill="#833ae8">F</tspan><tspan fill="#5f57dd">E</tspan><tspan fill="#397ec8">S</tspan><tspan fill="#13a5b3">T</tspan></text>
+      <text x="650" y="88" text-anchor="middle"><tspan fill="#ff7425">H</tspan><tspan fill="#ff683b">A</tspan><tspan fill="#ff5d50">C</tspan><tspan fill="#ff5166">K</tspan><tspan fill="#ff457c">T</tspan><tspan fill="#f63d91">O</tspan><tspan fill="#da3ca7">B</tspan><tspan fill="#bd3bbd">E</tspan><tspan fill="#a03bd2">R</tspan><tspan fill="#833ae8">F</tspan><tspan fill="#5f57dd">E</tspan><tspan fill="#397ec8">S</tspan><tspan fill="#13a5b3">T</tspan></text>
     </svg>
     <div class="year"><span>&lt;</span>2026<span>/&gt;</span></div>
 

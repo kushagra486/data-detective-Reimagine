@@ -23,9 +23,9 @@ window.CERT_CONFIG = {
   // x / y are fractions of the image width / height; y is the text baseline.
   name: {
     x: 0.5,
-    y: 0.594,
+    y: 0.626,
     maxWidth: 0.46,
-    fontSize: 0.058,
+    fontSize: 0.05,
     fontFamily: "Abril Fatface",
     fontWeight: "400",
     color: "#1d1340",
