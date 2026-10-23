@@ -33,9 +33,7 @@ body {
 }
 .chip { background: #fff; border-radius: 10px; padding: 5px 10px; display: inline-flex; }
 .chip img { display: block; height: 34px; width: auto; mix-blend-mode: multiply; }
-.dept { display: flex; align-items: center; gap: 10px; text-align: left; font-size: .8rem; color: var(--muted); line-height: 1.35; }
-.dept img.bb { height: 40px; width: auto; }
-.dept b { display: block; font-family: "Abril Fatface", serif; font-weight: 400; color: var(--violet); letter-spacing: .06em; font-size: 1.05rem; }
+.topbar .banner { display: block; height: 64px; width: auto; max-width: 62%; object-fit: contain; mix-blend-mode: multiply; }
 
 .hero {
   position: relative; overflow: hidden; isolation: isolate; text-align: center;
@@ -136,9 +134,8 @@ footer b { color: var(--ink); }
 @media (max-width: 640px) {
   .topbar { padding: 8px 12px; }
   .chip img { height: 24px; }
-  .dept { font-size: .6rem; gap: 6px; }
-  .dept img.bb { height: 28px; }
-  .dept b { font-size: .8rem; letter-spacing: .12em; }
+  .topbar { flex-wrap: wrap; row-gap: 8px; }
+  .topbar .banner { order: -1; flex: 1 1 100%; max-width: 100%; height: auto; }
   .hero { padding: 36px 16px 48px; }
   .prompt { font-size: .72rem; }
   .card { padding: 20px 14px 14px; }
