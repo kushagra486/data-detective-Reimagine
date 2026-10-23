@@ -26,15 +26,13 @@
 
     <div class="card">
       <h2 class="card-title">Claim your <strong>Participation Certificate</strong></h2>
-      <p class="card-sub">Type your full name exactly as you want it printed.</p>
+      <p class="card-sub">Type your full name as you registered for the event.</p>
       <form id="search-form" class="search" autocomplete="off" novalidate>
         <label for="name-input" class="sr-only">Your full name</label>
         <div class="search-box">
           <span class="search-ico" aria-hidden="true">&gt;_</span>
-          <input id="name-input" type="text" placeholder="e.g. Priya Sharma" maxlength="80" autocapitalize="words"
-                 aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false" />
+          <input id="name-input" type="text" placeholder="e.g. Priya Sharma" maxlength="80" autocapitalize="words" />
           <button type="submit">Get certificate</button>
-          <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
         </div>
         <p id="message" class="message" role="status" aria-live="polite"></p>
       </form>
@@ -55,11 +53,11 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Download Image
         </button>
       </div>
-      <p class="hint">Spotted a typo? Fix your name above and get it again.</p>
+      <p class="hint">Each certificate has a unique Certificate ID. Anyone can check it on the <a href="verify.html">verify page</a>.</p>
     </section>
   </main>
 
-  <footer><b>REIMAGINE Club</b> · Department of Information Technology, BBDITM, Lucknow</footer>
+  <footer><b>REIMAGINE Club</b> · Department of Information Technology, BBDITM, Lucknow · <a href="verify.html">Verify a certificate</a></footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="config.js"></script>

@@ -1,74 +1,54 @@
+// Hacktoberfest certificates: only names on the participant list have a certificate.
+// Each pre-made certificate is stored encrypted under certs/, keyed by the exact name,
+// so a certificate can only be opened by typing a listed name (see design notes in README).
 (function () {
   const cfg = window.CERT_CONFIG;
   const $ = (id) => document.getElementById(id);
 
   const form = $("search-form");
   const input = $("name-input");
-  const suggestions = $("suggestions");
   const message = $("message");
   const result = $("result");
   const canvas = $("preview");
   const resultName = $("result-name");
+  const button = form.querySelector("button[type=submit]");
 
-  let participants = [];
+  const ITERATIONS = 120000;
   let currentName = null;
 
   const normalize = (s) =>
     s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 
-  // Columns that hold a person's name: "Name", "Full Name", "Participant",
-  // "Member 1", "Team Member 2 Name", "Leader", ... (team-name columns are skipped).
-  const NAME_COL = /^(name|full ?name|participant( ?name)?|student( ?name)?|attendee( ?name)?|(team ?)?member ?\d*( ?name)?|(team ?)?lead(er)?( ?name)?)$/;
-
-  function parseParticipants(text) {
-    const rows = text.split(/\r?\n/).filter((l) => l.trim()).map(splitCSV);
-    if (!rows.length) return [];
-    const header = rows[0].map((h) => h.toLowerCase().replace(/[_\-.#:]+/g, " ").replace(/\s+/g, " ").trim());
-    const first = header.findIndex((h) => /^first ?name$/.test(h));
-    const last = header.findIndex((h) => /^(last ?name|surname)$/.test(h));
-    const cols = header.map((h, i) => (NAME_COL.test(h) ? i : -1)).filter((i) => i >= 0);
-
-    let body = rows.slice(1);
-    let pick;
-    if (first >= 0) pick = (r) => [`${r[first] || ""} ${last >= 0 ? r[last] || "" : ""}`];
-    else if (cols.length) pick = (r) => cols.map((i) => r[i]);
-    else { body = rows; pick = (r) => [r[0]]; } // no header: one name per line
-
-    const names = [];
-    for (const row of body) {
-      for (const raw of pick(row)) {
-        const name = (raw || "").replace(/\s+/g, " ").trim();
-        if (name) names.push(name);
-      }
-    }
-    return names;
-  }
-
-  function uniqueNames(list) {
-    const seen = new Set();
-    return list.filter((n) => { const k = normalize(n); if (seen.has(k)) return false; seen.add(k); return true; });
-  }
-
-  function splitCSV(line) {
-    const out = []; let cur = ""; let q = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (q) {
-        if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
-        else if (ch === '"') q = false;
-        else cur += ch;
-      } else if (ch === '"') q = true;
-      else if (ch === ",") { out.push(cur); cur = ""; }
-      else cur += ch;
-    }
-    out.push(cur);
-    return out;
-  }
-
   function tidyName(name) {
-    if (!cfg.autoCapitalize) return name;
-    if (name !== name.toLowerCase() && name !== name.toUpperCase()) return name;
-    return name.toLowerCase().replace(/(^|[\s\-'’.])(\p{L})/gu, (m, sep, ch) => sep + ch.toUpperCase());
+    return name.replace(/\s+/g, " ").trim().split(" ").map((w) =>
+      w === w.toLowerCase() || (w === w.toUpperCase() && w.length > 1)
+        ? w.toLowerCase().replace(/(^|[\-'’.])(\p{L})/gu, (m, sep, ch) => sep + ch.toUpperCase())
+        : w
+    ).join(" ");
+  }
+
+  async function sha256Hex(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function openSealed(secret, salt, bytes) {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", hash: "SHA-256", salt: new TextEncoder().encode(salt), iterations: ITERATIONS },
+      base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]
+    );
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes.slice(0, 12) }, key, bytes.slice(12));
+  }
+
+  async function fetchCertificate(name) {
+    const key = normalize(name);
+    const file = "certs/" + (await sha256Hex("hf26-cert|" + key)).slice(0, 40) + ".bin";
+    const res = await fetch(file, { cache: "no-cache" });
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const jpeg = await openSealed(key, "hf26-cert-key", new Uint8Array(await res.arrayBuffer()));
+    return new Blob([jpeg], { type: "image/jpeg" });
   }
 
   function setMessage(text, kind) {
@@ -76,94 +56,33 @@
     message.className = "message" + (kind ? " " + kind : "");
   }
 
-  function findMatches(query) {
-    const q = normalize(query);
-    if (q.length < 2) return [];
-    const parts = q.split(" ");
-    return participants
-      .filter((p) => { const n = normalize(p); return parts.every((w) => n.includes(w)); })
-      .slice(0, 6);
-  }
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const typed = input.value.replace(/\s+/g, " ").trim();
+    if (!typed) { setMessage("Please enter your name.", "error"); return; }
 
-  function showSuggestions(list) {
-    suggestions.innerHTML = "";
-    if (!list.length) { suggestions.hidden = true; input.setAttribute("aria-expanded", "false"); return; }
-    for (const name of list) {
-      const li = document.createElement("li");
-      li.setAttribute("role", "option");
-      li.textContent = name;
-      li.addEventListener("mousedown", (e) => { e.preventDefault(); input.value = name; showSuggestions([]); generate(name); });
-      suggestions.appendChild(li);
-    }
-    suggestions.hidden = false;
-    input.setAttribute("aria-expanded", "true");
-  }
-
-  async function generate(name) {
-    setMessage("Preparing your certificate…");
+    result.hidden = true;
+    button.disabled = true;
+    setMessage("Checking the participant list…");
     try {
-      await window.Certificate.render(canvas, name, cfg);
-      currentName = name;
-      resultName.textContent = name;
+      const blob = await fetchCertificate(typed);
+      if (!blob) { setMessage(cfg.notFoundMessage, "error"); return; }
+      await window.Certificate.drawImage(canvas, blob);
+      currentName = tidyName(typed);
+      resultName.textContent = currentName;
       result.hidden = false;
       setMessage("");
       result.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
       console.error(err);
-      setMessage("Sorry, something went wrong while creating the certificate.", "error");
-    }
-  }
-
-  input.addEventListener("input", () => {
-    if (cfg.restrictToList && cfg.suggestAsYouType !== false) showSuggestions(findMatches(input.value));
-  });
-  input.addEventListener("blur", () => setTimeout(() => showSuggestions([]), 100));
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    showSuggestions([]);
-    const typed = input.value.replace(/\s+/g, " ").trim();
-    if (!typed) { setMessage("Please enter your name.", "error"); return; }
-
-    if (!cfg.restrictToList) { generate(tidyName(typed)); return; }
-
-    const exact = participants.find((p) => normalize(p) === normalize(typed));
-    if (exact) { generate(exact); return; }
-
-    result.hidden = true;
-    // In strict mode only hint at close matches for a full name, so the list can't be browsed.
-    const strict = cfg.suggestAsYouType === false;
-    const close = strict && normalize(typed).split(" ").length < 2 ? [] : findMatches(typed);
-    if (close.length) {
-      setMessage("No exact match. Did you mean one of these?", "warn");
-      showSuggestions(close);
-    } else {
-      setMessage(cfg.notFoundMessage || "We couldn't find that name in the participant list. Please check the spelling or contact the organizers.", "error");
+      setMessage("Sorry, something went wrong. Please check your connection and try again.", "error");
+    } finally {
+      button.disabled = false;
     }
   });
 
   $("download-pdf").addEventListener("click", () => currentName && window.Certificate.downloadPDF(canvas, currentName));
-  $("download-png").addEventListener("click", () => currentName && window.Certificate.downloadPNG(canvas, currentName));
-  if (!cfg.formats.includes("pdf")) $("download-pdf").hidden = true;
-  if (!cfg.formats.includes("png")) $("download-png").hidden = true;
+  $("download-png").addEventListener("click", () => currentName && window.Certificate.downloadJPG(canvas, currentName));
 
-  document.querySelectorAll("[data-event-name]").forEach((el) => (el.textContent = cfg.eventName));
-  document.querySelectorAll("[data-organizer]").forEach((el) => (el.textContent = cfg.organizer));
   document.title = "Certificates · " + cfg.eventName;
-  if (!cfg.restrictToList) form.querySelector("button[type=submit]").textContent = "Get certificate";
-
-  // Warm up the template + font so the first preview is fast.
-  window.Certificate.loadImage(cfg.templateImage).catch(() => {});
-
-  if (cfg.restrictToList) {
-    const files = [].concat(cfg.participantsFile);
-    Promise.all(files.map((f) =>
-      fetch(f, { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(f + ": " + r.status); return r.text(); })
-    ))
-      .then((texts) => { participants = uniqueNames(texts.flatMap(parseParticipants)); })
-      .catch((err) => {
-        console.error(err);
-        setMessage("Participant list could not be loaded. Please try again later.", "error");
-      });
-  }
 })();
