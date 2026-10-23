@@ -35,7 +35,7 @@ function reply(req: Request, status: number, body: unknown): Response {
   });
 }
 
-// "hf26 r4eg kmzf" / "HF26R4EGKMZF" -> "HF26-R4EG-KMZF"
+// "hf26 abcd efgh" / "HF26ABCDEFGH" -> "HF26-ABCD-EFGH"
 function cleanId(raw: string): string {
   const s = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
   return s.length === 12 ? `${s.slice(0, 4)}-${s.slice(4, 8)}-${s.slice(8)}` : raw.trim().toUpperCase();
@@ -48,12 +48,12 @@ Deno.serve(async (req) => {
   const id = cleanId(new URL(req.url).searchParams.get("id") ?? "");
   if (!/^HF26-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(id)) return reply(req, 404, { valid: false });
 
-  const { data: cert, error } = await db.from("hacktoberfest_participants")
-    .select("name, team, certificate_id, revoked")
-    .eq("certificate_id", id).maybeSingle();
+  // The ID check runs in SQL (public.hacktoberfest_verify).
+  const { data, error } = await db.rpc("hacktoberfest_verify", { p_certificate_id: id });
   if (error) return reply(req, 500, { error: "server_error" });
+  const cert = data?.[0];
   if (!cert) return reply(req, 404, { valid: false });
-  if (cert.revoked) return reply(req, 200, { valid: false, revoked: true, certificateId: cert.certificate_id });
+  if (cert.status === "revoked") return reply(req, 200, { valid: false, revoked: true, certificateId: cert.certificate_id });
 
   return reply(req, 200, {
     valid: true,

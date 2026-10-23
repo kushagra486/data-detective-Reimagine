@@ -9,7 +9,7 @@
 // hacktoberfest/supabase/.
 //
 // After publishing any change to the Hacktoberfest site, bump the version (e.g.
-// 20261023-3 -> 20261023-3) in version.json AND in the ?v= tags and the V value in
+// 20261023-4 -> 20261023-4) in version.json AND in the ?v= tags and the V value in
 // index.html and verify.html, so visitors' browsers load the newest files at once.
 
 window.CERT_CONFIG = {

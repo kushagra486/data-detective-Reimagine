@@ -9,7 +9,7 @@
   const card = $("verified");
   const button = form.querySelector("button[type=submit]");
 
-  // "hf26 r4eg kmzf", "HF26R4EGKMZF" -> "HF26-R4EG-KMZF"
+  // "hf26 abcd efgh", "HF26ABCDEFGH" -> "HF26-ABCD-EFGH"
   function cleanId(raw) {
     const s = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
     return s.length === 12 ? `${s.slice(0, 4)}-${s.slice(4, 8)}-${s.slice(8)}` : raw.trim().toUpperCase();
