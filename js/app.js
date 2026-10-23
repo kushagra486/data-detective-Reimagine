@@ -16,37 +16,22 @@
   const normalize = (s) =>
     s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 
-  // Columns that hold a person's name: "Name", "Full Name", "Participant",
-  // "Member 1", "Team Member 2 Name", "Leader", ... (team-name columns are skipped).
-  const NAME_COL = /^(name|full ?name|participant( ?name)?|student( ?name)?|attendee( ?name)?|(team ?)?member ?\d*( ?name)?|(team ?)?lead(er)?( ?name)?)$/;
-
   function parseParticipants(text) {
-    const rows = text.split(/\r?\n/).filter((l) => l.trim()).map(splitCSV);
-    if (!rows.length) return [];
-    const header = rows[0].map((h) => h.toLowerCase().replace(/[_\-.#:]+/g, " ").replace(/\s+/g, " ").trim());
-    const first = header.findIndex((h) => /^first ?name$/.test(h));
-    const last = header.findIndex((h) => /^(last ?name|surname)$/.test(h));
-    const cols = header.map((h, i) => (NAME_COL.test(h) ? i : -1)).filter((i) => i >= 0);
-
-    let body = rows.slice(1);
-    let pick;
-    if (first >= 0) pick = (r) => [`${r[first] || ""} ${last >= 0 ? r[last] || "" : ""}`];
-    else if (cols.length) pick = (r) => cols.map((i) => r[i]);
-    else { body = rows; pick = (r) => [r[0]]; } // no header: one name per line
-
-    const names = [];
-    for (const row of body) {
-      for (const raw of pick(row)) {
-        const name = (raw || "").replace(/\s+/g, " ").trim();
-        if (name) names.push(name);
-      }
-    }
-    return names;
-  }
-
-  function uniqueNames(list) {
+    const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    if (!lines.length) return [];
+    const header = splitCSV(lines[0]).map((h) => h.toLowerCase());
+    let col = header.findIndex((h) => h === "name" || h === "full name" || h === "participant");
+    let rows = lines;
+    if (col !== -1) rows = lines.slice(1);
+    else col = 0;
     const seen = new Set();
-    return list.filter((n) => { const k = normalize(n); if (seen.has(k)) return false; seen.add(k); return true; });
+    const out = [];
+    for (const row of rows) {
+      const name = (splitCSV(row)[col] || "").trim();
+      const key = normalize(name);
+      if (name && !seen.has(key)) { seen.add(key); out.push(name); }
+    }
+    return out;
   }
 
   function splitCSV(line) {
@@ -115,7 +100,7 @@
   }
 
   input.addEventListener("input", () => {
-    if (cfg.restrictToList && cfg.suggestAsYouType !== false) showSuggestions(findMatches(input.value));
+    if (cfg.restrictToList) showSuggestions(findMatches(input.value));
   });
   input.addEventListener("blur", () => setTimeout(() => showSuggestions([]), 100));
 
@@ -131,14 +116,12 @@
     if (exact) { generate(exact); return; }
 
     result.hidden = true;
-    // In strict mode only hint at close matches for a full name, so the list can't be browsed.
-    const strict = cfg.suggestAsYouType === false;
-    const close = strict && normalize(typed).split(" ").length < 2 ? [] : findMatches(typed);
+    const close = findMatches(typed);
     if (close.length) {
       setMessage("No exact match. Did you mean one of these?", "warn");
       showSuggestions(close);
     } else {
-      setMessage(cfg.notFoundMessage || "We couldn't find that name in the participant list. Please check the spelling or contact the organizers.", "error");
+      setMessage("We couldn't find that name in the participant list. Please check the spelling or contact the organizers.", "error");
     }
   });
 
@@ -156,11 +139,9 @@
   window.Certificate.loadImage(cfg.templateImage).catch(() => {});
 
   if (cfg.restrictToList) {
-    const files = [].concat(cfg.participantsFile);
-    Promise.all(files.map((f) =>
-      fetch(f, { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(f + ": " + r.status); return r.text(); })
-    ))
-      .then((texts) => { participants = uniqueNames(texts.flatMap(parseParticipants)); })
+    fetch(cfg.participantsFile, { cache: "no-cache" })
+      .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then((t) => { participants = parseParticipants(t); })
       .catch((err) => {
         console.error(err);
         setMessage("Participant list could not be loaded. Please try again later.", "error");
