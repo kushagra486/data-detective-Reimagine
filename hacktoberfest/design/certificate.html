@@ -39,14 +39,6 @@
     background-size: 28px 28px;
   }
 
-  /* outer rainbow frame */
-  .frame {
-    position: absolute; inset: 26px; border-radius: 26px;
-    border: 10px solid transparent;
-    background: linear-gradient(120deg, var(--violet), var(--pink) 30%, var(--orange) 55%, var(--yellow) 72%, var(--teal)) border-box;
-    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0) border-box;
-    -webkit-mask-composite: xor; mask-composite: exclude;
-  }
   .circuit { position: absolute; inset: 0; width: 1754px; height: 1240px; }
 
   .content { position: absolute; inset: 92px 130px 96px; display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -68,9 +60,8 @@
   .org { margin-top: 14px; font-size: 19px; color: var(--muted); letter-spacing: .02em; }
   .org b { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 23px; letter-spacing: .2em; color: var(--violet); margin-right: 6px; }
 
-  .title { margin-top: 38px; font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 92px; line-height: 1; letter-spacing: .03em;
-    background: linear-gradient(90deg, var(--orange), var(--pink) 40%, var(--violet) 75%, var(--teal));
-    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .title { margin-top: 30px; display: block; width: 1300px; height: 108px; }
+  .title text { font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 92px; letter-spacing: .03em; }
   .year { display: inline-flex; gap: 10px; align-items: center; margin-top: 14px; font-family: "JetBrains Mono", monospace; font-size: 24px; font-weight: 700; color: var(--ink);
     background: var(--lime); padding: 6px 20px; border-radius: 8px; box-shadow: 0 6px 0 #8fbf10; letter-spacing: .08em; }
   .year span { color: var(--violet); }
@@ -101,11 +92,13 @@
 </style>
 </head>
 <body>
-  <div class="frame"></div>
 
   <!-- Circuit-board border: chamfered inner frame + traces mirrored into each corner -->
   <svg class="circuit" viewBox="0 0 1754 1240" aria-hidden="true">
     <defs>
+      <linearGradient id="g-rainbow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7c3aed"/><stop offset=".3" stop-color="#ff3d8b"/><stop offset=".55" stop-color="#ff7a1a"/><stop offset=".72" stop-color="#ffc81a"/><stop offset="1" stop-color="#00b8a9"/>
+      </linearGradient>
       <linearGradient id="g-border" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#7c3aed"/><stop offset=".5" stop-color="#ff3d8b"/><stop offset="1" stop-color="#00b8a9"/>
       </linearGradient>
@@ -121,6 +114,8 @@
       </g>
     </defs>
 
+    <!-- outer rainbow frame -->
+    <rect x="31" y="31" width="1692" height="1178" rx="22" fill="none" stroke="url(#g-rainbow)" stroke-width="10"/>
     <!-- chamfered inner border -->
     <path d="M96,58 H1658 L1696,96 V1144 L1658,1182 H96 L58,1144 V96 Z" fill="none" stroke="url(#g-border)" stroke-width="3"/>
     <path d="M118,74 H1636 L1680,118 V1122 L1636,1166 H118 L74,1122 V118 Z" fill="none" stroke="#1d1340" stroke-opacity=".12" stroke-width="2" stroke-dasharray="10 8"/>
@@ -156,7 +151,12 @@
     </div>
     <p class="org"><b>REIMAGINE CLUB</b> · Department of Information Technology · Lucknow</p>
 
-    <h1 class="title">HACKTOBERFEST</h1>
+    <svg class="title" viewBox="0 0 1300 108" role="img" aria-label="HACKTOBERFEST">
+      <defs><linearGradient id="g-title" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#ff7a1a"/><stop offset=".4" stop-color="#ff3d8b"/><stop offset=".75" stop-color="#7c3aed"/><stop offset="1" stop-color="#00b8a9"/>
+      </linearGradient></defs>
+      <text x="650" y="92" text-anchor="middle"><tspan fill="#ff7425">H</tspan><tspan fill="#ff683b">A</tspan><tspan fill="#ff5d50">C</tspan><tspan fill="#ff5166">K</tspan><tspan fill="#ff457c">T</tspan><tspan fill="#f63d91">O</tspan><tspan fill="#da3ca7">B</tspan><tspan fill="#bd3bbd">E</tspan><tspan fill="#a03bd2">R</tspan><tspan fill="#833ae8">F</tspan><tspan fill="#5f57dd">E</tspan><tspan fill="#397ec8">S</tspan><tspan fill="#13a5b3">T</tspan></text>
+    </svg>
     <div class="year"><span>&lt;</span>2026<span>/&gt;</span></div>
 
     <div class="kind">Certificate of Participation</div>
