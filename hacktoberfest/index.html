@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hacktoberfest 2026 · Certificates</title>
+  <meta name="description" content="Download your Hacktoberfest 2026 participation certificate. REIMAGINE Club, Department of Information Technology, BBDITM Lucknow." />
+  <meta name="theme-color" content="#7c3aed" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <span class="chip"><img src="assets/reimagine-logo.png" alt="REIMAGINE" /></span>
+    <div class="dept"><b>REIMAGINE CLUB</b>Department of Information Technology · BBDITM, Lucknow</div>
+    <span class="chip"><img src="assets/bbditm-logo.png" alt="BBDITM" class="bb" /></span>
+  </div>
+
+  <header class="hero">
+    <p class="prompt"><span>$</span> ./claim-certificate --event hacktoberfest<i class="caret"></i></p>
+    <h1 class="title">HACKTOBERFEST</h1>
+    <p class="year">&lt; 2026 /&gt;</p>
+    <p class="tag">Fork · Code · Commit · Pull Request · Celebrate</p>
+
+    <div class="card">
+      <h2 class="card-title">Claim your <strong>Participation Certificate</strong></h2>
+      <p class="card-sub">Type your full name exactly as you want it printed.</p>
+      <form id="search-form" class="search" autocomplete="off" novalidate>
+        <label for="name-input" class="sr-only">Your full name</label>
+        <div class="search-box">
+          <span class="search-ico" aria-hidden="true">&gt;_</span>
+          <input id="name-input" type="text" placeholder="e.g. Priya Sharma" maxlength="80" autocapitalize="words"
+                 aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false" />
+          <button type="submit">Get certificate</button>
+          <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+        </div>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </header>
+
+  <main>
+    <section id="result" class="result" hidden>
+      <p class="merged"><span class="dot"></span> Pull request merged</p>
+      <h2>Congratulations, <span id="result-name"></span>!</h2>
+      <p class="thanks">Thanks for contributing to open source with REIMAGINE Club.</p>
+      <div class="preview-wrap"><canvas id="preview" aria-label="Certificate preview"></canvas></div>
+      <div class="actions">
+        <button id="download-pdf" class="btn primary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Download PDF
+        </button>
+        <button id="download-png" class="btn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Download Image
+        </button>
+      </div>
+      <p class="hint">Spotted a typo? Fix your name above and get it again.</p>
+    </section>
+  </main>
+
+  <footer><b>REIMAGINE Club</b> · Department of Information Technology, BBDITM, Lucknow</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="config.js"></script>
+  <script src="../js/certificate.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

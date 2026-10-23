@@ -1,0 +1,135 @@
+<!doctype html>
+<!--
+  Source design for the Hacktoberfest certificate template.
+  Rendered to ../assets/certificate-template.png (3508 x 2480, A4 landscape @300dpi)
+  by design/render.mjs. The name line is left blank — the website prints the name.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700;800&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fffaf2;
+    --ink: #1d1340;
+    --muted: #5d5683;
+    --orange: #ff7a1a;
+    --pink: #ff3d8b;
+    --violet: #7c3aed;
+    --teal: #00b8a9;
+    --lime: #b6f01e;
+    --yellow: #ffc81a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1754px; height: 1240px; }
+  body {
+    position: relative; overflow: hidden;
+    font-family: "Space Grotesk", sans-serif; color: var(--ink);
+    background:
+      radial-gradient(520px 420px at 0% 0%, rgba(124,58,237,.22), transparent 70%),
+      radial-gradient(520px 420px at 100% 0%, rgba(0,184,169,.20), transparent 70%),
+      radial-gradient(560px 440px at 0% 100%, rgba(255,61,139,.20), transparent 70%),
+      radial-gradient(560px 440px at 100% 100%, rgba(255,122,26,.24), transparent 70%),
+      var(--bg);
+  }
+  /* faint code grid */
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(29,19,64,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,19,64,.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  /* rainbow stripe frame */
+  .frame {
+    position: absolute; inset: 30px; border-radius: 24px;
+    border: 10px solid transparent;
+    background: linear-gradient(var(--bg), var(--bg)) padding-box,
+                linear-gradient(120deg, var(--violet), var(--pink) 30%, var(--orange) 55%, var(--yellow) 72%, var(--teal)) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) border-box, linear-gradient(#000 0 0) padding-box;
+    -webkit-mask-composite: xor; mask-composite: exclude;
+  }
+  .frame-inner { position: absolute; inset: 54px; border-radius: 14px; border: 2px dashed rgba(29,19,64,.14); }
+
+  .px { position: absolute; width: 96px; height: 96px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; opacity: .85; }
+  .px i { background: var(--orange); border-radius: 3px; }
+  .px i:nth-child(3n) { background: var(--pink); }
+  .px i:nth-child(5n) { background: var(--violet); }
+  .px i:nth-child(7n) { background: var(--teal); }
+  .px i:nth-child(4n+1) { background: transparent; }
+  .px.bl { bottom: 74px; left: 74px; transform: scaleX(-1) rotate(180deg); } .px.br { bottom: 74px; right: 74px; transform: rotate(180deg); }
+
+  .content { position: absolute; inset: 90px 120px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+  .top { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .chip { background: #fff; border-radius: 14px; padding: 10px 18px; display: flex; align-items: center; box-shadow: 0 6px 20px rgba(29,19,64,.12); }
+  .chip img { display: block; height: 58px; width: auto; mix-blend-mode: multiply; }
+  .chip.bb img { height: 74px; }
+  .org { font-size: 20px; line-height: 1.45; color: var(--muted); letter-spacing: .02em; }
+  .org b { display: block; color: var(--violet); font-size: 28px; letter-spacing: .14em; font-weight: 700; }
+
+  .title { margin-top: 56px; font-family: "JetBrains Mono", monospace; font-weight: 800; font-size: 118px; line-height: 1; letter-spacing: -.02em;
+    background: linear-gradient(90deg, var(--orange), var(--pink) 45%, var(--violet) 80%, var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .year { display: inline-block; margin-top: 16px; font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 700; color: var(--ink);
+    background: var(--lime); box-shadow: 0 6px 0 #8fbf10; padding: 6px 18px; border-radius: 8px; letter-spacing: .08em; }
+  .year span { color: var(--violet); }
+
+  .kind { margin-top: 52px; font-size: 32px; font-weight: 700; letter-spacing: .42em; text-transform: uppercase; color: var(--ink); }
+  .kind::before, .kind::after { content: ""; display: inline-block; width: 90px; height: 3px; vertical-align: middle; margin: 0 26px; background: linear-gradient(90deg, transparent, var(--pink)); }
+  .kind::after { background: linear-gradient(90deg, var(--teal), transparent); }
+
+  .certify { margin-top: 44px; font-size: 26px; color: var(--muted); }
+  .name-line { margin-top: 112px; width: 900px; height: 3px; background: linear-gradient(90deg, transparent, var(--violet) 15%, var(--pink) 50%, var(--orange) 85%, transparent); }
+  .body { margin-top: 36px; max-width: 1180px; font-size: 24px; line-height: 1.6; color: #3b345f; }
+  .body b { color: var(--ink); }
+  .body code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 22px; }
+
+  .signs { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; padding: 0 30px; }
+  .sign { display: flex; flex-direction: column; align-items: center; }
+  .sign .space { height: 100px; }
+  .sign .line { width: 300px; height: 2px; background: var(--ink); opacity: .7; }
+  .sign .role { margin-top: 14px; font-size: 24px; font-weight: 700; letter-spacing: .04em; color: var(--ink); }
+  .sign .sub { margin-top: 4px; font-size: 18px; color: var(--muted); }
+
+  .code { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 17px; color: rgba(124,58,237,.38); text-align: left; line-height: 1.6; }
+  .code.l { left: 120px; top: 600px; }
+  .code.r { right: 120px; top: 600px; text-align: right; color: rgba(255,61,139,.42); }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="frame-inner"></div>
+  <div class="px bl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="px br"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="code l">$ git checkout -b first-pr<br />$ git commit -m "contribute"<br />$ git push origin first-pr</div>
+  <div class="code r">&lt;open-source&gt;<br />&nbsp;&nbsp;fork → code → PR<br />&lt;/open-source&gt;</div>
+
+  <div class="content">
+    <div class="top">
+      <div class="chip"><img src="../assets/reimagine-logo.png" alt="" /></div>
+      <div class="org"><b>REIMAGINE CLUB</b>Department of Information Technology<br />BBDITM, Lucknow</div>
+      <div class="chip bb"><img src="../assets/bbditm-logo.png" alt="" /></div>
+    </div>
+
+    <h1 class="title">HACKTOBERFEST</h1>
+    <div class="year"><span>&lt;</span> 2026 <span>/&gt;</span></div>
+
+    <div class="kind">Certificate of Participation</div>
+    <p class="certify">This is to certify that</p>
+    <div class="name-line" id="name-line"></div>
+
+    <p class="body">
+      has successfully participated in <b>Hacktoberfest 2026</b>, organised by the <b>REIMAGINE Club</b>,
+      Department of Information Technology, BBDITM, Lucknow, and contributed to the open-source community
+      during the month of October. <code>// keep shipping!</code>
+    </p>
+
+    <div class="signs">
+      <div class="sign"><div class="space"></div><div class="line"></div><div class="role">Director</div><div class="sub">BBDITM, Lucknow</div></div>
+      <div class="sign"><div class="space"></div><div class="line"></div><div class="role">Head of Department</div><div class="sub">Department of Information Technology</div></div>
+      <div class="sign"><div class="space"></div><div class="line"></div><div class="role">Club Coordinator</div><div class="sub">REIMAGINE Club</div></div>
+    </div>
+  </div>
+</body>
+</html>
